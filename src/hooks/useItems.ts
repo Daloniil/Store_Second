@@ -14,7 +14,6 @@ export const useItems = () => {
             const docRef = doc(db, "goods", typeGoods);
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                console.log(docSnap.data().items)
                 setItemHook(docSnap.data().items)
             }
         }

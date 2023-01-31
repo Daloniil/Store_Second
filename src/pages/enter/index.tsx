@@ -1,28 +1,23 @@
 import {useItems} from "@/hooks/useItems";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import {Item} from "@/Interfaces/ItemIterface";
 
 const EnterPage = () => {
+
+    const [items, setItems] = useState([{}] as Item[])
 
     const {itemHook, getItem} = useItems();
 
     useEffect(() => {
-        getItem('type')
-    }, [])
+        getItem('type' )
+        setItems(itemHook)
+    }, [itemHook])
 
     return <div>
-        {itemHook.map((item) => {
+        {items?.map((item) => {
             return (
                 <div key={item.id}>
-                    {/*{item.name}*/}
-                    <button style={{
-                        backgroundColor: '#3f51b5',
-                        color: 'white',
-                        padding: '10px',
-                        fontSize: '25px',
-                        borderRadius: '10px',
-                        textAlign: 'center',
-                    }}>Click
-                    </button>
+                    {item.name}
                 </div>
             )
         })}
