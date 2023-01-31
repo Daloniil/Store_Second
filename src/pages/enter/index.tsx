@@ -4,7 +4,7 @@ import {Item} from "@/Interfaces/ItemIterface";
 
 const EnterPage = () => {
 
-    const [items, setItems] = useState([{}] as Item[])
+    const [items, setItems] = useState([] as Item[])
 
     const {itemHook, getItem} = useItems();
 
