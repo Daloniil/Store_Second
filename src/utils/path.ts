@@ -1,11 +1,11 @@
 export const paths = [
     {
         title: "start Page",
-        pathName: "/enter",
+        pathName: "/main",
     },
     {
-        title: "Словарь",
-        pathName: "/dictionary",
+        title: "Add Page",
+        pathName: "/add",
     },
 ];
 

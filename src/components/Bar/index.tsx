@@ -4,10 +4,26 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import { BarProps } from "@/Interfaces/BarInterface";
+import {BarProps} from "@/Interfaces/BarInterface";
+import Button from "@mui/material/Button";
+import {useLogin} from "@/hooks/useLogin";
+import {useAuth} from "@/hooks/useAuth";
+import {useEffect, useState} from "react";
+import {Auth} from "@/Interfaces/ProvidersInterface";
+
 
 export const Bar = ({setOpen, title}: BarProps) => {
+    const {signIn, signOutGoogle} = useLogin();
+    const {authContext} = useAuth();
+
+    const [user, setUser] = useState({} as Auth);
+
     const drawerWidth: number = 240;
+
+
+    useEffect(() => {
+        setUser(authContext)
+    }, [authContext])
 
     const AppBar = styled(MuiAppBar)(({theme}) => ({
         zIndex: 1,
@@ -40,12 +56,10 @@ export const Bar = ({setOpen, title}: BarProps) => {
                 >
                     {title}
                 </Typography>
-                <IconButton color="inherit">
-                    <Typography variant="h6" color="inherit" component="div">
-                        Word learning
-                    </Typography>
-                </IconButton>
+                {user.user?.uid ? <Button onClick={signOutGoogle} color="inherit">Logout</Button> :
+                    <Button onClick={signIn} color="inherit">Authentication</Button>}
             </Toolbar>
         </AppBar>
     );
 };
+

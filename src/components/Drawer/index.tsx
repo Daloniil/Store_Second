@@ -13,7 +13,10 @@ import {useRouter} from "next/router";
 import Router from "next/router";
 
 import {paths} from "@/utils/path";
-import { DrawerBarProps } from "@/Interfaces/DrawerBarInterface";
+import {DrawerBarProps} from "@/Interfaces/DrawerBarInterface";
+import {useAuth} from "@/hooks/useAuth";
+import {Auth} from "@/Interfaces/ProvidersInterface";
+import {ADMIN_UID} from "@/services/localKey";
 
 
 const useStyles = makeStyles(() => ({
@@ -29,6 +32,9 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const DrawerBar = ({openDrawer, setOpenDrawer}: DrawerBarProps) => {
+    const {authContext} = useAuth();
+
+    const [user, setUser] = useState({} as Auth);
     const [drawerStatus, setDrawerStatus] = useState(false);
 
     const router = useRouter();
@@ -59,6 +65,11 @@ export const DrawerBar = ({openDrawer, setOpenDrawer}: DrawerBarProps) => {
         }
     }, [openDrawer]);
 
+
+    useEffect(() => {
+        setUser(authContext)
+    }, [authContext])
+
     return (
         <Drawer anchor={"left"} open={drawerStatus} onClose={toggleDrawer(false)}>
             <Box
@@ -74,20 +85,20 @@ export const DrawerBar = ({openDrawer, setOpenDrawer}: DrawerBarProps) => {
                 <List>
                     {paths.map((item, index) => {
                         return (
-                            <ListItem
-                                key={index}
-                                button
-                                onClick={() => redirect(item.pathName)}
-                                className={
-                                    item.pathName === router.asPath
-                                        ? classes.item
-                                        : ""
-                                }
-                            >
-                                <ListItemText
-                                    primary={item.title}
-                                />
-                            </ListItem>
+                            <span key={index}>
+                            {
+                                user.user && user.user.uid !== ADMIN_UID.UID && item.pathName === '/add' ? '' :
+                                    <ListItem
+                                        onClick={() => redirect(item.pathName)}
+                                        className={item.pathName === router.asPath ? classes.item : ""}
+                                    >
+                                        <ListItemText
+                                            primary={item.title}
+                                        />
+                                    </ListItem>
+                            }
+                            </span>
+
                         );
                     })}
                 </List>

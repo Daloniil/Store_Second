@@ -2,7 +2,7 @@ import {useItems} from "@/hooks/useItems";
 import {useEffect, useState} from "react";
 import {Item} from "@/Interfaces/ItemIterface";
 
-const EnterPage = () => {
+const MainPage = () => {
 
     const [items, setItems] = useState([] as Item[])
 
@@ -24,4 +24,4 @@ const EnterPage = () => {
     </div>
 }
 
-export default EnterPage
+export default MainPage

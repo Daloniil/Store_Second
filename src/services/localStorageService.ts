@@ -1,3 +1,6 @@
+import { Auth } from "@/Interfaces/ProvidersInterface";
+import { ContextKey } from "./localKey";
+
 type ItemType = string;
 
 export class LocalStorageService {
@@ -11,4 +14,18 @@ export class LocalStorageService {
             return null;
         }
     }
+
+    public static setAuth(auth: Auth, session = false) {
+        const storage = session ? sessionStorage : localStorage;
+        storage.setItem(ContextKey.AUTH, JSON.stringify(auth));
+    }
+
+    public static removeAuth(session = false) {
+        const storage = session ? sessionStorage : localStorage;
+        storage.setItem(
+            ContextKey.AUTH,
+            JSON.stringify({user: {displayName: "", uid: ""}})
+        );
+    }
+
 }

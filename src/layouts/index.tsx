@@ -6,9 +6,9 @@ import React from "react";
 import {useState} from "react";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import {paths} from "@/utils/path";
-import { Bar } from "@/components/Bar";
-import { LayoutProps } from "@/Interfaces/LayoutInterface";
-import { DrawerBar } from "@/components/Drawer";
+import {Bar} from "@/components/Bar";
+import {LayoutProps} from "@/Interfaces/LayoutInterface";
+import {DrawerBar} from "@/components/Drawer";
 
 const Layout = ({children}: LayoutProps) => {
     const router = useRouter();
@@ -35,9 +35,7 @@ const Layout = ({children}: LayoutProps) => {
             <Box sx={{display: "flex"}}>
                 <CssBaseline/>
                 <Bar
-                    title={
-                        items!.title
-                    }
+                    title={items?.title ?? ""}
                     setOpen={setOpen}
                 />
                 <DrawerBar openDrawer={open} setOpenDrawer={setOpen}/>
