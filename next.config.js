@@ -1,7 +1,17 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
-  experimental: {
-    appDir: true,
+  reactStrictMode: true,
+  env: {
+    API_URL:'https://microsoft-translator-text.p.rapidapi.com'
+  },async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/enter',
+        permanent: true,
+      }, 
+    ]
   },
 }
 
