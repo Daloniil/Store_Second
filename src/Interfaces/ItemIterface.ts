@@ -7,3 +7,11 @@ export interface Item {
     photo: string,
 
 }
+
+export interface ItemAdd {
+    cost: number,
+    description: string,
+    name: string,
+    photo: string,
+    type:string,
+}
