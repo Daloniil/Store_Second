@@ -1,5 +1,6 @@
-import { Auth } from "@/Interfaces/ProvidersInterface";
-import { ContextKey } from "./localKey";
+import {Item} from "@/Interfaces/ItemIterface";
+import {Auth} from "@/Interfaces/ProvidersInterface";
+import {ContextKey} from "./localKey";
 
 type ItemType = string;
 
@@ -27,5 +28,58 @@ export class LocalStorageService {
             JSON.stringify({user: {displayName: "", uid: ""}})
         );
     }
+
+    public static setCart(item: Item, session = false) {
+        const storage = session ? sessionStorage : localStorage;
+        let items = LocalStorageService.getItem<Item[]>(ContextKey.CART)
+        if (items) {
+            const it = items.find(it => it.id === item.id);
+            if (it) {
+                // @ts-ignore
+                items.find(it => it.id === item.id).amount++;
+            } else {
+                items.push(item)
+            }
+        } else {
+            items = [item]
+        }
+
+        storage.setItem(ContextKey.CART, JSON.stringify(items));
+    }
+
+
+    public static setCarts(item: Item[], session = false) {
+        const storage = session ? sessionStorage : localStorage;
+        storage.setItem(ContextKey.CART, JSON.stringify(item));
+    }
+
+    public static removeItemCart(id: number, session = false) {
+        const storage = session ? sessionStorage : localStorage;
+        let items = LocalStorageService.getItem<Item[]>(ContextKey.CART)
+        const indexGoods = items?.map((id: Item) => id.id).indexOf(id);
+        // @ts-ignore
+        items?.splice(indexGoods, 1);
+        storage.setItem(ContextKey.CART, JSON.stringify(items));
+    }
+
+
+    public static minusItemCart(id: number, session = false) {
+        const storage = session ? sessionStorage : localStorage;
+        let items = LocalStorageService.getItem<Item[]>(ContextKey.CART)
+        const indexGoods = items?.map((id: Item) => id.id).indexOf(id);
+        // @ts-ignore
+        items[indexGoods].amount -= 1
+        storage.setItem(ContextKey.CART, JSON.stringify(items));
+    }
+
+    public static plusItemCart(id: number, session = false) {
+        const storage = session ? sessionStorage : localStorage;
+        let items = LocalStorageService.getItem<Item[]>(ContextKey.CART)
+        const indexGoods = items?.map((id: Item) => id.id).indexOf(id);
+        // @ts-ignore
+        items[indexGoods].amount += 1
+        storage.setItem(ContextKey.CART, JSON.stringify(items));
+    }
+
 
 }

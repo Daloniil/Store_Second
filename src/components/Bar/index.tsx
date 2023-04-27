@@ -10,6 +10,8 @@ import {useLogin} from "@/hooks/useLogin";
 import {useAuth} from "@/hooks/useAuth";
 import {useEffect, useState} from "react";
 import {Auth} from "@/Interfaces/ProvidersInterface";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Router from "next/router";
 
 
 export const Bar = ({setOpen, title}: BarProps) => {
@@ -20,6 +22,9 @@ export const Bar = ({setOpen, title}: BarProps) => {
 
     const drawerWidth: number = 240;
 
+    const redirect = (pathName: string) => {
+        Router.push(pathName);
+    };
 
     useEffect(() => {
         setUser(authContext)
@@ -47,6 +52,7 @@ export const Bar = ({setOpen, title}: BarProps) => {
                     <MenuIcon/>
                 </IconButton>
 
+
                 <Typography
                     component="h1"
                     variant="h6"
@@ -56,6 +62,9 @@ export const Bar = ({setOpen, title}: BarProps) => {
                 >
                     {title}
                 </Typography>
+
+                    <ShoppingCartIcon onClick={() => redirect('/cart')}/>
+
                 {user.user?.uid ? <Button onClick={signOutGoogle} color="inherit">Logout</Button> :
                     <Button onClick={signIn} color="inherit">Authentication</Button>}
             </Toolbar>

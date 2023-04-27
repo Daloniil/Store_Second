@@ -15,7 +15,7 @@ const Layout = ({children}: LayoutProps) => {
 
 
     const [open, setOpen] = useState(false);
-    const items = paths.find((path) => path.pathName === router.asPath);
+    const items = router.asPath === '/cart' ? {title: 'Cart'} : paths.find((path) => path.pathName === router.asPath);
 
     const theme = createTheme({
         components: {

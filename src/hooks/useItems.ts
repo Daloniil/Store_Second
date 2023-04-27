@@ -4,14 +4,13 @@ import {doc, getDoc, getFirestore, setDoc} from "firebase/firestore";
 import {authentication} from "firebase-config";
 import {NotificationKeys} from "@/services/localKey";
 import {useNotification} from "@/hooks/useNotification";
+import { itemType } from "@/utils/itemType";
 
 export const useItems = () => {
     const {addNotification} = useNotification();
 
-
     const [itemHook, setItemHook] = useState([] as Item[]);
 
-    const itemType = ['type']
 
 
     const getItem = async (typeGoods: string) => {
@@ -21,7 +20,6 @@ export const useItems = () => {
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
                 setItemHook(docSnap.data().items)
-                console.log(docSnap.data().items)
             }
         }
     }
@@ -36,8 +34,8 @@ export const useItems = () => {
                 const items = arr.items
 
                 const newItem = {
-                    id: items.length,
-                    amount: 0,
+                    id: Math.random().toString(36).substr(2, 9),
+                    amount: 1,
                     cost: item.cost,
                     description: item.description,
                     photo: item.photo,
@@ -46,12 +44,28 @@ export const useItems = () => {
                 items.push(newItem)
                 setDoc(docRef, arr);
                 return;
+            } else {
+                const db = getFirestore();
+                const collectionId = "goods";
+                const documentId = item.type;
+
+                const newItem = {
+                    id: Math.random().toString(36).substr(2, 9),
+                    amount: 1,
+                    cost: item.cost,
+                    description: item.description,
+                    photo: item.photo,
+                    name: item.name
+                }
+                const newArray = {items: [newItem]}
+
+                setDoc(doc(db, collectionId, documentId), newArray);
             }
         }
     }
 
 
-    const deleteWord = async (id: number, typeGoods: string) => {
+    const deleteItem = async (id: number, typeGoods: string) => {
         if (authentication) {
             const db = getFirestore();
             const docRef = doc(db, "goods", typeGoods);
@@ -74,6 +88,6 @@ export const useItems = () => {
         itemHook,
         itemType,
         addItem,
-        deleteWord
+        deleteItem
     };
 }

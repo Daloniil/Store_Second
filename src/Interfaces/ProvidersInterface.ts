@@ -1,7 +1,20 @@
+import {Item} from "@/Interfaces/ItemIterface";
+
 export type AuthContextType = {
     authContext: Auth;
     setAuth: (auth: Auth) => void;
     removeAuth: () => void;
+};
+
+export type CartContextType = {
+    cartContext: Item[];
+    addItemCart: (item: Item) => void;
+    removeItemCart: (id:number) => void;
+    setItemCart:(items: Item[]) => void
+    minusItemCart:(id:number) => void
+    plusItemCart:(id:number) => void
+
+
 };
 
 export type Auth = {

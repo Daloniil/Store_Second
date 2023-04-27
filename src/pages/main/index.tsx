@@ -6,20 +6,29 @@ import {ADMIN_UID} from "@/services/localKey";
 import Router from "next/router";
 import {Auth} from "@/Interfaces/ProvidersInterface";
 import {useAuth} from "@/hooks/useAuth";
+import {useCartContext} from "@/hooks/useCartContext";
+import {useCart} from "@/hooks/useCart";
 
 const MainPage = () => {
     const {authContext} = useAuth();
-    const {itemHook, getItem, deleteWord} = useItems();
+    const {cartContext, setItemCart} = useCartContext()
+    const {getCart, cartHook, addItemToCartUpdate} = useCart()
 
-
-    const [items, setItems] = useState([] as Item[])
     const [user, setUser] = useState({} as Auth);
 
+    getCart()
 
     useEffect(() => {
-        getItem('type')
-        setItems(itemHook)
-    }, [itemHook])
+        if (cartHook.length !== cartContext.length) {
+
+            if (!cartContext.length) {
+                setItemCart(cartHook)
+            } else {
+                addItemToCartUpdate(cartContext)
+            }
+        }
+    }, [cartHook])
+
 
     useEffect(() => {
         setUser(authContext)
@@ -33,16 +42,16 @@ const MainPage = () => {
 
 
     return <div>
-        {items?.map((item) => {
-            return (
-                <div key={item.id}>
-                    {item.name}
-                    <Image src={item.photo} alt={item.name} width={150} height={150}/>
-                    {user.user && user.user.uid !== ADMIN_UID.UID ? '' :
-                        <button onClick={() => deleteWord(item.id, 'type')}>Delete</button>}
-                </div>
-            )
-        })}
+        {/*{items?.map((item) => {*/}
+        {/*    return (*/}
+        {/*        <div key={item.id}>*/}
+        {/*            {item.name}*/}
+        {/*            <Image src={item.photo} alt={item.name} width={150} height={150}/>*/}
+        {/*            {user.user && user.user.uid !== ADMIN_UID.UID ? '' :*/}
+        {/*                <button onClick={() => deleteItem(item.id, 'type')}>Delete</button>}*/}
+        {/*        </div>*/}
+        {/*    )*/}
+        {/*})}*/}
     </div>
 }
 

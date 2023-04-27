@@ -1,5 +1,6 @@
 export enum ContextKey {
     AUTH = "app-auth",
+    CART = "app-cart"
 }
 
 export enum LoginStatus {
