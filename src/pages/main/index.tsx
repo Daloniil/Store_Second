@@ -1,7 +1,4 @@
-import {useItems} from "@/hooks/useItems";
 import {useEffect, useState} from "react";
-import {Item} from "@/Interfaces/ItemIterface";
-import Image from "next/image";
 import {ADMIN_UID} from "@/services/localKey";
 import Router from "next/router";
 import {Auth} from "@/Interfaces/ProvidersInterface";
@@ -19,14 +16,11 @@ const MainPage = () => {
     getCart()
 
     useEffect(() => {
-        if (cartHook.length !== cartContext.length) {
-
-            if (!cartContext.length) {
+        setTimeout(() => {
+            if (cartHook.length !== cartContext.length) {
                 setItemCart(cartHook)
-            } else {
-                addItemToCartUpdate(cartContext)
             }
-        }
+        }, 1500)
     }, [cartHook])
 
 

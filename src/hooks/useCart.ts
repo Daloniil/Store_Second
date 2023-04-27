@@ -36,7 +36,11 @@ export const useCart = () => {
                 const docRef = doc(db, "cart", authContext.user.uid);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
-                    setCartHook(docSnap.data().cart)
+                    if (compareArraysByKeys(docSnap.data().cart,cartHook)) {
+                        return
+                    } else {
+                        setCartHook(docSnap.data().cart)
+                    }
                 }
             }
         }
@@ -55,45 +59,6 @@ export const useCart = () => {
                         return
                     } else {
                         arr.cart = newItems
-                        setDoc(docRef, arr);
-                        return;
-                    }
-                } else {
-                    const db = getFirestore();
-                    const collectionId = "cart";
-                    const documentId = authContext.user.uid;
-
-
-                    const newArray = {cart: newItems}
-
-                    setDoc(doc(db, collectionId, documentId), newArray);
-                }
-            }
-        }
-    }
-
-
-    const addItemToCartUpdate = async (newItems: Item[]) => {
-        if (authContext.user.uid) {
-            if (authentication) {
-                const db = getFirestore();
-                const docRef = doc(db, "cart", authContext.user.uid);
-                const docSnap = await getDoc(docRef);
-                if (docSnap.exists()) {
-                    const arr = docSnap.data();
-                    if (compareArraysByKeys(arr.cart, newItems)) {
-                        return
-                    } else {
-                        arr.cart = newItems
-
-                        newItems.forEach((item: Item) => {
-                            const it = arr.cart.find((it: Item) => it.id === item.id);
-                            if (it) {
-                                return
-                            } else {
-                                arr.cart.push(item)
-                            }
-                        })
                         setDoc(docRef, arr);
                         return;
                     }
@@ -134,6 +99,5 @@ export const useCart = () => {
         getCart,
         addItemToCart,
         deleteItem,
-        addItemToCartUpdate
     };
 }

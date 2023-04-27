@@ -4,13 +4,13 @@ import {doc, getDoc, getFirestore, setDoc} from "firebase/firestore";
 import {authentication} from "firebase-config";
 import {NotificationKeys} from "@/services/localKey";
 import {useNotification} from "@/hooks/useNotification";
-import { itemType } from "@/utils/itemType";
+import {itemType} from "@/utils/itemType";
+import {compareArraysByKeys} from "@/hooks/useCart";
 
 export const useItems = () => {
     const {addNotification} = useNotification();
 
     const [itemHook, setItemHook] = useState([] as Item[]);
-
 
 
     const getItem = async (typeGoods: string) => {
@@ -19,7 +19,11 @@ export const useItems = () => {
             const docRef = doc(db, "goods", typeGoods);
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                setItemHook(docSnap.data().items)
+                if (compareArraysByKeys(docSnap.data().items, itemHook)) {
+                    return
+                } else {
+                    setItemHook(docSnap.data().items)
+                }
             }
         }
     }
