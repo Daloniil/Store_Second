@@ -5,6 +5,7 @@ import {authentication} from "firebase-config";
 import {NotificationKeys} from "@/services/localKey";
 import {useNotification} from "@/hooks/useNotification";
 import {useAuth} from "@/hooks/useAuth";
+import {useCartContext} from "@/hooks/useCartContext";
 
 
 export const compareArraysByKeys = (a: Item[], b: Item[]): boolean => {
@@ -27,6 +28,7 @@ export const useCart = () => {
 
     const {authContext} = useAuth();
     const [cartHook, setCartHook] = useState([] as Item[]);
+    const {cartContext, setItemCart} = useCartContext()
 
 
     const getCart = async () => {
@@ -36,10 +38,30 @@ export const useCart = () => {
                 const docRef = doc(db, "cart", authContext.user.uid);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
-                    if (compareArraysByKeys(docSnap.data().cart,cartHook)) {
+                    if (compareArraysByKeys(docSnap.data().cart, cartHook)) {
                         return
                     } else {
                         setCartHook(docSnap.data().cart)
+                    }
+                }
+            }
+        }
+    }
+
+    const getCartCheckout = async () => {
+        if (authContext.user.uid) {
+            if (authentication) {
+                const db = getFirestore();
+                const docRef = doc(db, "cart", authContext.user.uid);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    if (compareArraysByKeys(docSnap.data().cart, cartHook)) {
+                        return
+                    } else {
+                        setCartHook(docSnap.data().cart)
+                        if (cartHook.length !== cartContext.length) {
+                            setItemCart(docSnap.data().cart)
+                        }
                     }
                 }
             }
@@ -99,5 +121,6 @@ export const useCart = () => {
         getCart,
         addItemToCart,
         deleteItem,
+        getCartCheckout
     };
 }

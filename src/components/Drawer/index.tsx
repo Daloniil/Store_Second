@@ -17,6 +17,7 @@ import {DrawerBarProps} from "@/Interfaces/DrawerBarInterface";
 import {useAuth} from "@/hooks/useAuth";
 import {Auth} from "@/Interfaces/ProvidersInterface";
 import {ADMIN_UID} from "@/services/localKey";
+import { redirectTo } from "@/utils/redirect";
 
 
 const useStyles = makeStyles(() => ({
@@ -40,10 +41,6 @@ export const DrawerBar = ({openDrawer, setOpenDrawer}: DrawerBarProps) => {
     const router = useRouter();
 
     const classes = useStyles();
-
-    const redirect = (pathName: string) => {
-        Router.push(pathName);
-    };
 
     const toggleDrawer =
         (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -89,7 +86,7 @@ export const DrawerBar = ({openDrawer, setOpenDrawer}: DrawerBarProps) => {
                             {
                                 user.user && user.user.uid !== ADMIN_UID.UID && item.pathName === '/add' ? '' :
                                     <ListItem
-                                        onClick={() => redirect(item.pathName)}
+                                        onClick={() => redirectTo(item.pathName)}
                                         className={item.pathName === router.asPath ? classes.item : ""}
                                     >
                                         <ListItemText

@@ -9,7 +9,7 @@ import {useCart} from "@/hooks/useCart";
 const MainPage = () => {
     const {authContext} = useAuth();
     const {cartContext, setItemCart} = useCartContext()
-    const {getCart, cartHook, addItemToCartUpdate} = useCart()
+    const {getCart, cartHook} = useCart()
 
     const [user, setUser] = useState({} as Auth);
 

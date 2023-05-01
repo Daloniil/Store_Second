@@ -9,6 +9,7 @@ import {NotificationKeys} from "@/services/localKey";
 import {useNotification} from "@/hooks/useNotification";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import {redirectTo} from "@/utils/redirect";
 
 const CartPage = () => {
     const {addNotification} = useNotification();
@@ -52,6 +53,7 @@ const CartPage = () => {
         addItemToCart(item)
     }
 
+
     return <div>
         {item?.map((item) => {
             return (
@@ -67,6 +69,7 @@ const CartPage = () => {
             )
         })}
         All Cost: {item.reduce((total, item) => total + (item.cost * item.amount), 0)}
+        <Button onClick={() => redirectTo("/checkout")}>Checkout</Button>
     </div>
 }
 export default CartPage

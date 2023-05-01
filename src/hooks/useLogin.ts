@@ -23,7 +23,22 @@ export const useLogin = () => {
             if (res) {
                 //@ts-ignore
                 setAuth(res);
+                console.log(res)
                 Router.push("/main");
+            } else {
+                addNotification("Error", NotificationKeys.ERROR);
+            }
+        });
+    };
+
+    const signInCheckout = async () => {
+        const provider = new GoogleAuthProvider();
+        await signInWithPopup(authentication, provider).then((res) => {
+            if (res) {
+                //@ts-ignore
+                setAuth(res);
+                Router.push("/checkout");
+
             } else {
                 addNotification("Error", NotificationKeys.ERROR);
             }
@@ -49,11 +64,13 @@ export const useLogin = () => {
     const signOutGoogle = () => {
         signOut(auth);
         removeAuth();
+
     };
 
     return {
         signIn,
         signOutGoogle,
         checkingLogin,
+        signInCheckout
     };
 };

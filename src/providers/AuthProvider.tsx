@@ -4,7 +4,7 @@ import {LocalStorageService} from "@/services/localStorageService";
 import React, {ReactNode, useCallback, useState} from "react";
 
 export const AuthContext = React.createContext<AuthContextType>({
-    authContext: {user: {displayName: "", uid: ""}},
+    authContext: {user: {displayName: "", uid: "", email: '', phoneNumber: 0}},
     setAuth: () => {
     },
     removeAuth: () => {
@@ -14,7 +14,7 @@ export const AuthContext = React.createContext<AuthContextType>({
 const appGetAuth = (key: string): Auth => {
     return (
         LocalStorageService.getItem<Auth>(key) ?? {
-            user: {displayName: "", uid: ""},
+            user: {displayName: "", uid: "", email: '', phoneNumber: 0},
         }
     );
 };

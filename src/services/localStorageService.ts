@@ -27,8 +27,6 @@ export class LocalStorageService {
             ContextKey.AUTH,
             JSON.stringify({user: {displayName: "", uid: ""}})
         );
-        localStorage.clear()
-        document.location.reload()
     }
 
     public static setCart(item: Item, session = false) {
@@ -58,14 +56,15 @@ export class LocalStorageService {
             items = []
         }
 
-        item.forEach((item: Item) => {
-            const it = items?.find((it: Item) => it.id === item.id);
+        item.forEach((i: Item) => {
+            const it = items?.find((it: Item) => it.id === i.id);
             if (it) {
                 return
             } else {
-                items?.push(item)
+                items?.push(i)
             }
         })
+
         storage.setItem(ContextKey.CART, JSON.stringify(items));
     }
 

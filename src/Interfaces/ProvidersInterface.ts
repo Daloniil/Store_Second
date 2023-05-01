@@ -9,10 +9,10 @@ export type AuthContextType = {
 export type CartContextType = {
     cartContext: Item[];
     addItemCart: (item: Item) => void;
-    removeItemCart: (id:number) => void;
-    setItemCart:(items: Item[]) => void
-    minusItemCart:(id:number) => void
-    plusItemCart:(id:number) => void
+    removeItemCart: (id: number) => void;
+    setItemCart: (items: Item[]) => void
+    minusItemCart: (id: number) => void
+    plusItemCart: (id: number) => void
 
 
 };
@@ -24,6 +24,8 @@ export type Auth = {
 export type CurrentUser = {
     uid: string;
     displayName: string;
+    email: string;
+    phoneNumber: number;
 };
 
 export type NotificationContextType = {
