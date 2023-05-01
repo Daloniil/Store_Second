@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {Item} from "@/Interfaces/ItemIterface";
 import Image from "next/image";
 import {ADMIN_UID} from "@/services/localKey";
-import Router, {useRouter} from "next/router";
+import {useRouter} from "next/router";
 import {Auth} from "@/Interfaces/ProvidersInterface";
 import {useAuth} from "@/hooks/useAuth";
 import {Button, CircularProgress} from "@mui/material";

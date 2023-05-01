@@ -19,5 +19,9 @@ export const paths = [
         title: "Bed Page",
         pathName: "/catalog/bed",
     },
+    {
+        title: "Orders Page",
+        pathName: "/orders",
+    },
 ];
 

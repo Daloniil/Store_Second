@@ -18,6 +18,7 @@ export class LocalStorageService {
 
     public static setAuth(auth: Auth, session = false) {
         const storage = session ? sessionStorage : localStorage;
+        localStorage.clear()
         storage.setItem(ContextKey.AUTH, JSON.stringify(auth));
     }
 
@@ -75,6 +76,11 @@ export class LocalStorageService {
         // @ts-ignore
         items?.splice(indexGoods, 1);
         storage.setItem(ContextKey.CART, JSON.stringify(items));
+    }
+
+    public static removeCart(session = false) {
+        const storage = session ? sessionStorage : localStorage;
+        storage.setItem(ContextKey.CART, JSON.stringify([]));
     }
 
 

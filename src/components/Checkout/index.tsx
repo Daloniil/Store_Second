@@ -9,6 +9,10 @@ import {useNovaPoshta} from "@/hooks/novaPoshta";
 import {cityStyle} from "@/styles/checkoutStyle";
 import {NotificationKeys} from "@/services/localKey";
 import {useNotification} from "@/hooks/useNotification";
+import {useOrders} from "@/hooks/orders";
+import Router from "next/router";
+import {useCartContext} from "@/hooks/useCartContext";
+import {Item} from "@/Interfaces/ItemIterface";
 
 
 const schema = yup.object().shape({
@@ -26,8 +30,9 @@ const schema = yup.object().shape({
 
 type CheckoutComponent = {
     authContext: Auth
+    items: Item[]
 }
-export const CheckoutComponent = ({authContext}: CheckoutComponent) => {
+export const CheckoutComponent = ({authContext, items}: CheckoutComponent) => {
     const {
         register,
         handleSubmit,
@@ -42,6 +47,8 @@ export const CheckoutComponent = ({authContext}: CheckoutComponent) => {
 
     const {getCities, getWarehouses} = useNovaPoshta()
     const {addNotification} = useNotification();
+    const {addItemToOrders} = useOrders()
+    const {removeCart} = useCartContext()
 
 
     const [cityes, setCityes] = useState([] as Array<any>)
@@ -101,9 +108,12 @@ export const CheckoutComponent = ({authContext}: CheckoutComponent) => {
             <form onSubmit={handleSubmit((data) => {
                 data.arey = city.MainDescription as string
                 data.warehous = warehous.Description
+                data.item = items
                 if (data.arey && data.warehous) {
-                    // addItem(data)
                     addNotification("Item add SUCCESS", NotificationKeys.SUCCESS);
+                    addItemToOrders(data)
+                    removeCart()
+                    Router.push("/waitorder");
                 } else {
                     addNotification("Select Array and Warehous ", NotificationKeys.ERROR);
                 }

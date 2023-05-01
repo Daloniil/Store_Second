@@ -13,6 +13,8 @@ export type CartContextType = {
     setItemCart: (items: Item[]) => void
     minusItemCart: (id: number) => void
     plusItemCart: (id: number) => void
+    removeCart: () => void
+
 
 
 };

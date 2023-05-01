@@ -8,7 +8,8 @@ export const useCartContext = () => {
         removeItemCart,
         setItemCart,
         minusItemCart,
-        plusItemCart
+        plusItemCart,
+        removeCart
     } = useContext(CartContext);
 
     return {
@@ -17,6 +18,7 @@ export const useCartContext = () => {
         removeItemCart,
         setItemCart,
         minusItemCart,
-        plusItemCart
+        plusItemCart,
+        removeCart
     };
 };

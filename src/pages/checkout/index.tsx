@@ -9,6 +9,7 @@ import {useCart} from "@/hooks/useCart";
 import Image from "next/image";
 import {Item} from "@/Interfaces/ItemIterface";
 import {CheckoutComponent} from "@/components/Checkout";
+import Router from "next/router";
 
 const CheckoutPage = () => {
     const {authContext} = useAuth();
@@ -28,7 +29,11 @@ const CheckoutPage = () => {
     getCartCheckout()
 
     useEffect(() => {
-        setItem(cartContext)
+        if (cartContext.length) {
+            setItem(cartContext)
+        } else {
+            Router.push("/main");
+        }
     }, [])
 
 
@@ -56,7 +61,6 @@ const CheckoutPage = () => {
             >
                 <Box sx={modalStyle}>
                     You must be authtentication
-
                     <Button onClick={signInCheckout}>Authentication</Button>
                 </Box>
             </Modal>
@@ -70,7 +74,7 @@ const CheckoutPage = () => {
                         </div>
                     )
                 })}
-                    <CheckoutComponent authContext={authContext}/>
+                    <CheckoutComponent authContext={authContext} items={item}/>
                 </div>
                 : ''}
         </div>

@@ -4,20 +4,17 @@ import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import React, {useEffect, useState} from "react";
 import makeStyles from "@mui/styles/makeStyles";
 import {useRouter} from "next/router";
-import Router from "next/router";
-
 import {paths} from "@/utils/path";
 import {DrawerBarProps} from "@/Interfaces/DrawerBarInterface";
 import {useAuth} from "@/hooks/useAuth";
 import {Auth} from "@/Interfaces/ProvidersInterface";
 import {ADMIN_UID} from "@/services/localKey";
-import { redirectTo } from "@/utils/redirect";
+import {redirectTo} from "@/utils/redirect";
 
 
 const useStyles = makeStyles(() => ({
@@ -84,7 +81,7 @@ export const DrawerBar = ({openDrawer, setOpenDrawer}: DrawerBarProps) => {
                         return (
                             <span key={index}>
                             {
-                                user.user && user.user.uid !== ADMIN_UID.UID && item.pathName === '/add' ? '' :
+                                (user.user && user.user.uid !== ADMIN_UID.UID && item.pathName === '/add') || (!user.user || !user.user.uid && item.pathName === '/orders') ? '' :
                                     <ListItem
                                         onClick={() => redirectTo(item.pathName)}
                                         className={item.pathName === router.asPath ? classes.item : ""}

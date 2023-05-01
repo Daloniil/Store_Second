@@ -15,6 +15,8 @@ export const CartContext = React.createContext<CartContextType>({
     minusItemCart: () => {
     },
     plusItemCart: () => {
+    },
+    removeCart: () => {
     }
 });
 
@@ -56,6 +58,11 @@ export const CartProvider = ({children}: { children: ReactNode }) => {
         updateState();
     };
 
+    const handleRemoveCarts = () => {
+        LocalStorageService.removeCart();
+        updateState();
+    };
+
     const value = {
         cartContext,
         addItemCart: useCallback((item: Item) => handleSetCart(item), []),
@@ -63,6 +70,8 @@ export const CartProvider = ({children}: { children: ReactNode }) => {
         removeItemCart: useCallback((id: number) => handleRemoveCart(id), []),
         minusItemCart: useCallback((id: number) => handleMinusCart(id), []),
         plusItemCart: useCallback((id: number) => handlePlusCart(id), []),
+        removeCart: useCallback(() => handleRemoveCarts(), []),
+
 
     };
 
