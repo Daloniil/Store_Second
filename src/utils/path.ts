@@ -1,14 +1,14 @@
 export const paths = [
     {
-        title: "start Page",
+        title: "Головна Сторінка",
         pathName: "/main",
     },
     {
-        title: "Add Page",
+        title: "Додати Товар",
         pathName: "/add",
     },
     {
-        title: "Toy page",
+        title: "Сторінка Іграшок",
         pathName: "/catalog/toy",
     },
     {

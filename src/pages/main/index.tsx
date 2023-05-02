@@ -36,16 +36,7 @@ const MainPage = () => {
 
 
     return <div>
-        {/*{items?.map((item) => {*/}
-        {/*    return (*/}
-        {/*        <div key={item.id}>*/}
-        {/*            {item.name}*/}
-        {/*            <Image src={item.photo} alt={item.name} width={150} height={150}/>*/}
-        {/*            {user.user && user.user.uid !== ADMIN_UID.UID ? '' :*/}
-        {/*                <button onClick={() => deleteItem(item.id, 'type')}>Delete</button>}*/}
-        {/*        </div>*/}
-        {/*    )*/}
-        {/*})}*/}
+
     </div>
 }
 

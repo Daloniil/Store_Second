@@ -6,62 +6,90 @@ import {ADMIN_UID} from "@/services/localKey";
 import {useRouter} from "next/router";
 import {Auth} from "@/Interfaces/ProvidersInterface";
 import {useAuth} from "@/hooks/useAuth";
-import {Button, CircularProgress} from "@mui/material";
-import {circularProgress} from "@/styles/typeStyle";
+import {
+    Box,
+    Button,
+    CardContent,
+    CircularProgress,
+} from "@mui/material";
 import {useCartContext} from "@/hooks/useCartContext";
+import {ButtonsContainer, CardsWrapper, CardWrapper, ItemName, Price } from "@/styles/itemTypeStyle";
 
 const TypePage = () => {
     const {authContext} = useAuth();
     const {itemHook, getItem, deleteItem} = useItems();
-    const {addItemCart} = useCartContext()
-
-
+    const {addItemCart} = useCartContext();
     const [user, setUser] = useState({} as Auth);
-    const router = useRouter()
-
-
-    useEffect(() => {
-        getItem(String(router.query.type))
-    }, [])
+    const router = useRouter();
 
     useEffect(() => {
-        setUser(authContext)
-    }, [authContext])
+        getItem(String(router.query.type));
+    }, [router]);
 
     useEffect(() => {
-        getItem(String(router.query.type))
-    }, [router])
-
+        setUser(authContext);
+    }, [authContext]);
 
     const remover = (id: number, type: string) => {
-        deleteItem(id, String(type))
+        deleteItem(id, String(type));
         const indexGoods = itemHook?.map((id: Item) => id.id).indexOf(id);
         itemHook?.splice(indexGoods, 1);
-    }
+    };
+
+    const openItem = (item: any) => {
+        router.push({
+            pathname: `/catalog/item/${Math.random().toString(36).substr(2, 9)}`,
+            query: {item: JSON.stringify(item), items: JSON.stringify(itemHook)},
+        });
+    };
+
+    const clickDelete = (e: any, id: number) => {
+        e.stopPropagation();
+        remover(id, String(router.query.type));
+    };
+
+    const clickAddCart = (e: any, item: any) => {
+        e.stopPropagation();
+        addItemCart(item);
+    };
+
+    const capitalizeFirstLetter = (str: string) => {
+        const words = str.split(" ");
+        return words
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(" ");
+    };
 
 
-    return <div>
-        {itemHook.length ? itemHook?.map((item) => {
-            return (
-                <div key={item.id} onClick={() => {
-                    router.push({
-                        pathname: `/catalog/item/${Math.random().toString(36).substr(2, 9)}`,
-                        query: {item: JSON.stringify(item)},
-                    });
-                }}>
-                    {item.name}
-                    <Image src={item.photo} alt={item.name} width={150} height={150}/>
-                    {user.user && user.user.uid !== ADMIN_UID.UID ? '' :
-                        <Button onClick={() => remover(item.id, String(router.query.type))}>Delete</Button>}
-                    <Button onClick={(e) => {
-                        e.stopPropagation();
-                        addItemCart(item)
-                    }}>Add to cart</Button>
 
-                </div>
-            )
-        }) : <CircularProgress sx={circularProgress}/>}
-    </div>
-}
+    return (
+        <Box>
+            {itemHook.length ? (
+                <CardsWrapper>
+                    {itemHook?.map((item) => (
+                        <CardWrapper key={item.id} onClick={() => openItem(item)}>
+                            <Image src={item.photo} alt={item.name} width={300} height={300}/>
+                            <CardContent>
+                                <ItemName sx={{maxWidth: '250px'}}>{capitalizeFirstLetter(item.name)}</ItemName>
+                                <Price>{item.cost} UAH</Price>
+                                <ButtonsContainer>
+                                    <Button onClick={(e) => clickAddCart(e, item)} variant="contained">Add to
+                                        cart</Button>
+                                    {user.user && user.user.uid !== ADMIN_UID.UID ? (
+                                        ""
+                                    ) : (
+                                        <Button onClick={(e) => clickDelete(e, item.id)}>Delete</Button>
+                                    )}
+                                </ButtonsContainer>
+                            </CardContent>
+                        </CardWrapper>
+                    ))}
+                </CardsWrapper>
+            ) : (
+                <CircularProgress/>
+            )}
+        </Box>
+    );
+};
 
-export default TypePage
+export default TypePage;
