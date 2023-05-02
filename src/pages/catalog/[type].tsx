@@ -43,12 +43,20 @@ const TypePage = () => {
     return <div>
         {itemHook.length ? itemHook?.map((item) => {
             return (
-                <div key={item.id}>
+                <div key={item.id} onClick={() => {
+                    router.push({
+                        pathname: `/catalog/item/${Math.random().toString(36).substr(2, 9)}`,
+                        query: {item: JSON.stringify(item)},
+                    });
+                }}>
                     {item.name}
                     <Image src={item.photo} alt={item.name} width={150} height={150}/>
                     {user.user && user.user.uid !== ADMIN_UID.UID ? '' :
                         <Button onClick={() => remover(item.id, String(router.query.type))}>Delete</Button>}
-                    <Button onClick={() => addItemCart(item)}>Add to cart</Button>
+                    <Button onClick={(e) => {
+                        e.stopPropagation();
+                        addItemCart(item)
+                    }}>Add to cart</Button>
 
                 </div>
             )

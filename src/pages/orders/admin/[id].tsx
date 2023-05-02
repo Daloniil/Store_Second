@@ -1,9 +1,8 @@
 import Router, {useRouter} from "next/router";
-import {OrderPage} from "@/components/OrderPage";
 import {useAuth} from "@/hooks/useAuth";
 
 
-const OrderUserPage = () => {
+const OrderAdminPage = () => {
     const router = useRouter();
     const {authContext} = useAuth();
 
@@ -47,4 +46,4 @@ const OrderUserPage = () => {
     )
 }
 
-export default OrderUserPage
+export default OrderAdminPage
