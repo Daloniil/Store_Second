@@ -1,12 +1,12 @@
 import {useCartContext} from '@/hooks/useCartContext';
 import {Box, Button, Grid, Typography} from '@material-ui/core';
 import {useRouter} from 'next/router';
-import {styled} from '@material-ui/core/styles';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import {ProductDescription, ProductPrice, ProductTitle, Slide} from '@/styles/itemIdStyle';
 import {settings} from '@/utils/sliderSettings';
+import { capitalizeFirstLetter } from '@/utils/firstLetter';
 
 const ProductPage = () => {
     const router = useRouter();
@@ -30,12 +30,6 @@ const ProductPage = () => {
         addItemCart(parsedItem)
     };
 
-    const capitalizeFirstLetter = (str: string) => {
-        const words = str.split(" ");
-        return words
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-            .join(" ");
-    };
 
     const openItem = (item: any) => {
         router.push({

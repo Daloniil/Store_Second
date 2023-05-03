@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import {useCartContext} from "@/hooks/useCartContext";
 import {ButtonsContainer, CardsWrapper, CardWrapper, ItemName, Price } from "@/styles/itemTypeStyle";
+import { capitalizeFirstLetter } from "@/utils/firstLetter";
 
 const TypePage = () => {
     const {authContext} = useAuth();
@@ -52,15 +53,6 @@ const TypePage = () => {
         e.stopPropagation();
         addItemCart(item);
     };
-
-    const capitalizeFirstLetter = (str: string) => {
-        const words = str.split(" ");
-        return words
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-            .join(" ");
-    };
-
-
 
     return (
         <Box>
