@@ -11,9 +11,16 @@ import {useAuth} from "@/hooks/useAuth";
 import {useEffect, useState} from "react";
 import {Auth} from "@/Interfaces/ProvidersInterface";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { redirectTo } from "@/utils/redirect";
+import {redirectTo} from "@/utils/redirect";
+import {useRouter} from "next/router";
+import {capitalizeFirstLetter} from "@/utils/firstLetter";
 
 export const Bar = ({setOpen, title}: BarProps) => {
+    const router = useRouter();
+    const {item} = router.query;
+    const [parsItemTitle, setParsItemTitle] = useState('')
+
+
     const {signIn, signOutGoogle} = useLogin();
     const {authContext} = useAuth();
 
@@ -24,6 +31,13 @@ export const Bar = ({setOpen, title}: BarProps) => {
     useEffect(() => {
         setUser(authContext)
     }, [authContext])
+
+    useEffect(() => {
+        if (item) {
+            //@ts-ignore
+            setParsItemTitle(JSON.parse(item).name)
+        }
+    }, [item])
 
     const AppBar = styled(MuiAppBar)(({theme}) => ({
         zIndex: 1,
@@ -51,12 +65,12 @@ export const Bar = ({setOpen, title}: BarProps) => {
                     variant="h6"
                     color="inherit"
                     noWrap
-                    sx={{flexGrow: 1}}
+                    sx={{flexGrow: 1, padding: '0 0 0 5px'}}
                 >
-                    {title}
+                    {title ? title : capitalizeFirstLetter(parsItemTitle)}
                 </Typography>
 
-                <ShoppingCartIcon onClick={() => redirectTo('/cart')} sx={{margin:'0 5px 0 0'}}/>
+                <ShoppingCartIcon onClick={() => redirectTo('/cart')} sx={{margin: '0 5px 0 0'}}/>
 
                 {user.user?.uid ? <Typography>{user.user.displayName}</Typography>
                     : ''}

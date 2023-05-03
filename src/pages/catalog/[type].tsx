@@ -13,8 +13,8 @@ import {
     CircularProgress,
 } from "@mui/material";
 import {useCartContext} from "@/hooks/useCartContext";
-import {ButtonsContainer, CardsWrapper, CardWrapper, ItemName, Price } from "@/styles/itemTypeStyle";
-import { capitalizeFirstLetter } from "@/utils/firstLetter";
+import {ButtonsContainer, CardsWrapper, CardWrapper, ItemName, Price} from "@/styles/itemTypeStyle";
+import {capitalizeFirstLetter} from "@/utils/firstLetter";
 
 const TypePage = () => {
     const {authContext} = useAuth();
@@ -60,7 +60,7 @@ const TypePage = () => {
                 <CardsWrapper>
                     {itemHook?.map((item) => (
                         <CardWrapper key={item.id} onClick={() => openItem(item)}>
-                            <Image src={item.photo} alt={item.name} width={350} height={400} />
+                            <Image src={item.photo} alt={item.name} width={350} height={400}/>
                             <CardContent>
                                 <ItemName sx={{maxWidth: '250px'}}>{capitalizeFirstLetter(item.name)}</ItemName>
                                 <Price>{item.cost} UAH</Price>
@@ -78,7 +78,9 @@ const TypePage = () => {
                     ))}
                 </CardsWrapper>
             ) : (
-                <CircularProgress/>
+                <Box display="flex" justifyContent="center" alignItems="center" height="30vh">
+                    <CircularProgress sx={{minWidth: "150px", minHeight: '150px', margin: '0 auto'}}/>
+                </Box>
             )}
         </Box>
     );
