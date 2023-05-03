@@ -30,7 +30,7 @@ export const CardWrapper = styled(Card)({
     margin: "0px 20px 20px 0",
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)",
     cursor: "pointer",
-    minHeight: "400px",
+    minHeight: "500px",
     transition: "all 0.2s ease-out",
     "&:hover": {
         transform: "translateY(-5px)",

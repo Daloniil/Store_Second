@@ -8,16 +8,24 @@ export const paths = [
         pathName: "/add",
     },
     {
-        title: "Сторінка Іграшок",
+        title: "Іграшки Ручної Роботи",
         pathName: "/catalog/toy",
     },
     {
-        title: "Table Page",
+        title: "Столи Ручної Роботи",
         pathName: "/catalog/table",
     },
     {
-        title: "Bed Page",
+        title: "Ліжка Ручної Роботи",
         pathName: "/catalog/bed",
+    },
+    {
+        title: "Чоловічі Вишиванки",
+        pathName: "/catalog/embroidered_man",
+    },
+    {
+        title: "Жіночі Вишиванки",
+        pathName: "/catalog/embroidered_woman",
     },
     {
         title: "Orders Page",

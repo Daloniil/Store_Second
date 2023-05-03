@@ -19,7 +19,7 @@ const AddPage = () => {
 
     const [user, setUser] = useState({} as Auth);
     const [imageToUpload, setImageToUpload] = useState('');
-    const [type, setType] = useState('');
+    const [type, setType] = useState('0');
 
 
     useEffect(() => {
@@ -43,7 +43,9 @@ const AddPage = () => {
         register,
         handleSubmit,
         formState: {errors},
+        reset
     } = useForm<ItemAdd>({resolver: yupResolver(schema)});
+
 
     const imageUploaded = (): void => {
         // @ts-ignore
@@ -64,9 +66,9 @@ const AddPage = () => {
                 img.src = re;
                 img.onload = function () {
                     const that = this;
-                    const w = '560';
-                    const h = '292';
-                    const quality = 0.9; // quality
+                    const w = '800';
+                    const h = '800';
+                    const quality = 1; // quality
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
                     const anw = document.createAttribute('width');
@@ -90,30 +92,25 @@ const AddPage = () => {
     };
 
 
-
-
     return (
         <div>
-            Add
-
-
+            Додати
             <form
                 onSubmit={handleSubmit((data) => {
                     data.photo = imageToUpload
-                    data.type = itemType[Number(type)]
+                    data.type = itemType[Number(type)].pathName
                     if (data.photo && data.type) {
+                        console.log(data)
                         addItem(data)
                         addNotification("Item add SUCCESS", NotificationKeys.SUCCESS);
-                        setTimeout(() => {
-                            document.location.reload()
-                        }, 1000)
+                        reset()
                     } else {
                         addNotification("Select type and photo", NotificationKeys.ERROR);
                     }
                 })}
                 style={{margin: "0 auto"}}
             >
-                <InputLabel id="demo-simple-select-label">Select Type Item</InputLabel>
+                <InputLabel id="demo-simple-select-label">Оберіть тип товару</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -123,7 +120,7 @@ const AddPage = () => {
                 >
                     {itemType.map((itemT, index) => {
                         return (
-                            <MenuItem value={index} key={index}>{itemT}</MenuItem>
+                            <MenuItem value={index} key={index}>{itemT.title}</MenuItem>
                         )
                     })}
                 </Select>
@@ -166,6 +163,7 @@ const AddPage = () => {
                 </Button>
 
             </form>
+
 
         </div>
     )

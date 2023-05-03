@@ -6,7 +6,8 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import {ProductDescription, ProductPrice, ProductTitle, Slide} from '@/styles/itemIdStyle';
 import {settings} from '@/utils/sliderSettings';
-import { capitalizeFirstLetter } from '@/utils/firstLetter';
+import {capitalizeFirstLetter} from '@/utils/firstLetter';
+import {useEffect, useState} from 'react';
 
 const ProductPage = () => {
     const router = useRouter();
@@ -25,6 +26,9 @@ const ProductPage = () => {
     //@ts-ignore
     const parsedItems = JSON.parse(items);
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [imageSrc, setImageSrc] = useState(parsedItem.photo);
+
 
     const handleAddToCartClick = () => {
         addItemCart(parsedItem)
@@ -39,13 +43,33 @@ const ProductPage = () => {
     };
 
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const img = new Image();
+        img.src = parsedItem.photo;
+        img.onload = () => {
+            canvas.width = img.width * 2;
+            canvas.height = img.height * 2;
+            //@ts-ignore
+            ctx.imageSmoothingEnabled = true;
+            //@ts-ignore
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            const newBase64 = canvas.toDataURL("image/jpeg", 1);
+            setImageSrc(newBase64);
+        };
+    }, [parsedItem]);
+
+
     return (
         <Box p={3}>
             <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
                     <Box display="flex" flexDirection="column">
                         <Box mb={1} style={{position: 'relative', paddingBottom: '100%', height: 0}}>
-                            <img src={parsedItem.photo} alt={parsedItem.name} style={{
+                            <img src={imageSrc} alt={parsedItem.name} style={{
                                 position: 'absolute',
                                 top: 0,
                                 left: 0,

@@ -60,7 +60,7 @@ const TypePage = () => {
                 <CardsWrapper>
                     {itemHook?.map((item) => (
                         <CardWrapper key={item.id} onClick={() => openItem(item)}>
-                            <Image src={item.photo} alt={item.name} width={300} height={300}/>
+                            <Image src={item.photo} alt={item.name} width={350} height={400} />
                             <CardContent>
                                 <ItemName sx={{maxWidth: '250px'}}>{capitalizeFirstLetter(item.name)}</ItemName>
                                 <Price>{item.cost} UAH</Price>
