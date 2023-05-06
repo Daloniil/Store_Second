@@ -1,12 +1,11 @@
 import {Auth} from "@/Interfaces/ProvidersInterface"
 import {useState} from "react";
-import {Box, Button, TextField} from "@mui/material";
+import {Box, Button, Grid, TextField, Typography} from "@mui/material";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {Form} from "@/Interfaces/Form";
 import * as yup from "yup";
 import {useNovaPoshta} from "@/hooks/novaPoshta";
-import {cityStyle} from "@/styles/checkoutStyle";
 import {NotificationKeys} from "@/services/localKey";
 import {useNotification} from "@/hooks/useNotification";
 import {useOrders} from "@/hooks/orders";
@@ -63,6 +62,7 @@ export const CheckoutComponent = ({authContext, items}: CheckoutComponent) => {
     const [showSelectCity, setShowSelectCity] = useState(false)
     const [showSelectWarehous, setShowSelectWarehous] = useState(false)
 
+    const [cityInputValue, setCityInputValue] = useState("");
 
     const setCity = async (event: any) => {
         const resCityes = await getCities(event.target.value)
@@ -95,6 +95,7 @@ export const CheckoutComponent = ({authContext, items}: CheckoutComponent) => {
         setWarehouses(item.MainDescription)
         setOpenStatus(false)
         setShowSelectCity(true)
+        setCityInputValue(item.MainDescription);
     };
 
     const handleChangeWarehouses = (item: any) => {
@@ -104,97 +105,184 @@ export const CheckoutComponent = ({authContext, items}: CheckoutComponent) => {
     };
 
     return (
-        <div>
-            <form onSubmit={handleSubmit((data) => {
-                data.arey = city.MainDescription as string
-                data.warehous = warehous.Description
-                data.item = items
-                if (data.arey && data.warehous) {
-                    addNotification("Item add SUCCESS", NotificationKeys.SUCCESS);
-                    addItemToOrders(data)
-                    removeCart()
-                    Router.push("/waitorder");
-                } else {
-                    addNotification("Select Array and Warehous ", NotificationKeys.ERROR);
-                }
-            })}>
-                <TextField
-                    error={!!errors.name}
-                    label="Name"
-                    {...register("name", {required: true})}
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    helperText={errors.name?.message}
-                />
+        <Box>
+            <form
+                onSubmit={handleSubmit((data) => {
+                    data.arey = city.MainDescription as string;
+                    data.warehous = warehous.Description;
+                    data.item = items;
+                    if (data.arey && data.warehous) {
+                        addNotification("Item add SUCCESS", NotificationKeys.SUCCESS);
+                        addItemToOrders(data);
+                        removeCart();
+                        Router.push("/waitorder");
+                    } else {
+                        addNotification(
+                            "Select Array and Warehous ",
+                            NotificationKeys.ERROR
+                        );
+                    }
+                })}
+            >
+                <Typography variant="h6" sx={{fontWeight: "bold", margin: {xs: '0 0 0 -10px', md: '0 0 0 0'}}}>Інформація
+                    Для Замовлення:</Typography>
 
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            variant="outlined"
+                            error={!!errors.name}
+                            label="Ім'я"
+                            {...register("name", {required: true})}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            helperText={errors.name?.message}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            variant="outlined"
+                            error={!!errors.mail}
+                            label="Пошта"
+                            {...register("mail", {required: true})}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            helperText={errors.mail?.message}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            variant="outlined"
+                            error={!!errors.number}
+                            label="Номер Телефона"
+                            {...register("number", {required: true})}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            helperText={errors.number?.message}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            variant="outlined"
+                            label="Місто"
+                            value={cityInputValue ? cityInputValue : null}
+                            onChange={(event) => {
+                                setCity(event);
+                                setShowSelectCity(false);
+                                setOpenStatus(true);
+                                setWarehousess([]);
+                                setWarehous({});
+                                setCityInputValue('');
 
-                <TextField
-                    error={!!errors.mail}
-                    label="Email"
-                    {...register("mail", {required: true})}
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    helperText={errors.name?.message}
-                />
+                            }}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+                    </Grid>
 
-                <TextField
-                    error={!!errors.number}
-                    label="Phone number"
-                    {...register("number", {required: true})}
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    helperText={errors.name?.message}
-                />
+                    <Grid item xs={12}>
+                        {city && showSelectCity ? (
+                            <Typography variant="subtitle1">
+                                {city.MainDescription ? `Місто: ${city.MainDescription}` : ""}
+                            </Typography>
+                        ) : (
+                            <Box
+                                sx={{
+                                    maxHeight: "150px",
+                                    maxWidth: "450px",
+                                    overflowY: "scroll",
+                                    display: openStatus ? "block" : "none",
+                                }}
+                            >
+                                <Grid container spacing={2}>
+                                    {cityes.length
+                                        ? cityes.map((item, index) => {
+                                            return (
+                                                <Grid item xs={12} key={index}>
+                                                    <Typography
+                                                        variant="subtitle1"
+                                                        color="primary"
+                                                        onClick={() => handleChange(item)}
+                                                        sx={{cursor: "pointer"}}
+                                                    >
+                                                        {item.Present}
+                                                    </Typography>
+                                                </Grid>
+                                            );
+                                        })
+                                        : ""}
+                                </Grid>
+                            </Box>
+                        )}
+                    </Grid>
 
-                <input onChange={(event) => {
-                    setCity(event);
-                    setShowSelectCity(false);
-                    setOpenStatus(true);
-                    setWarehousess([])
-                    setWarehous({})
-                }}/>
-
-                {city && showSelectCity ? <Box>{city.MainDescription ? city.MainDescription : 'EMPTY'}</Box> :
-                    <Box sx={{
-                        maxHeight: '150px',
-                        maxWidth: "450px",
-                        overflowY: 'scroll',
-                        display: openStatus ? 'block' : 'none'
-                    }}>
-                        {cityes.length ? cityes.map((item, index) => {
-                            return (
-                                <Box key={index} sx={cityStyle} onClick={() => handleChange(item)}>{item.Present}</Box>
-                            )
-                        }) : ''}
-                    </Box>}
-
-
-                {warehous && showSelectWarehous ? <Box onClick={() => {
-                    setShowSelectWarehous(false);
-                    setOpenStatusWarehouses(true)
-                }}>{warehous.Description}</Box> : <Box sx={{
-                    maxHeight: '150px',
-                    maxWidth: "450px",
-                    overflowY: 'scroll',
-                    display: openStatusWarehouses ? 'block' : 'none',
-                    margin: '150px 0 0 250px'
-                }}>
-                    {warehouses.length ? warehouses.map((item, index) => {
-                        return (
-                            <Box key={index} sx={cityStyle}
-                                 onClick={() => handleChangeWarehouses(item)}>{item.Description}</Box>
-                        )
-                    }) : ''}
-
-                </Box>}
-
-                <Button variant="outlined" size="medium" type="submit">
-                    Add Item
-                </Button>
+                    <Grid item xs={12}>
+                        {warehous && showSelectWarehous ? (
+                            <Typography
+                                variant="subtitle1"
+                                onClick={() => {
+                                    setShowSelectWarehous(false);
+                                    setOpenStatusWarehouses(true);
+                                }}
+                                sx={{cursor: "pointer"}}
+                            >
+                                {warehous.Description}
+                            </Typography>
+                        ) : (
+                            <Box>
+                                {warehouses.length ? 'Оберіть відділення:' : ''}
+                                <Box
+                                    sx={{
+                                        maxHeight: "150px",
+                                        maxWidth: "450px",
+                                        overflowY: "scroll",
+                                        display: openStatusWarehouses ? "block" : "none",
+                                        margin: '5px 0 0 0'
+                                    }}
+                                >
+                                    <Grid container spacing={2}>
+                                        {warehouses.length
+                                            ? warehouses.map((item, index) => {
+                                                return (
+                                                    <Grid item xs={12} key={index}>
+                                                        <Typography
+                                                            variant="subtitle1"
+                                                            color="primary"
+                                                            onClick={() => handleChangeWarehouses(item)}
+                                                            sx={{cursor: "pointer"}}
+                                                        >
+                                                            {item.Description}
+                                                        </Typography>
+                                                    </Grid>
+                                                );
+                                            })
+                                            : ""}
+                                    </Grid>
+                                </Box>
+                            </Box>
+                        )}
+                    </Grid>
+                    <Grid container item xs={12} justifyContent="flex-end">
+                        <Button variant="contained" color="primary" size="medium" type="submit">
+                            Замовити Товар
+                        </Button>
+                    </Grid>
+                </Grid>
             </form>
-        </div>
+        </Box>
     )
 }
+
+
+
+

@@ -28,7 +28,7 @@ export const paths = [
         pathName: "/catalog/embroidered_woman",
     },
     {
-        title: "Orders Page",
+        title: "Замовлення",
         pathName: "/orders",
     },
 ];

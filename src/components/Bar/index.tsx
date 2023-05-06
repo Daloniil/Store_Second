@@ -74,8 +74,10 @@ export const Bar = ({setOpen, title}: BarProps) => {
 
                 {user.user?.uid ? <Typography>{user.user.displayName}</Typography>
                     : ''}
-                {user.user?.uid ? <Button onClick={signOutGoogle} color="inherit">Вийти</Button> :
-                    <Button onClick={signIn} color="inherit">Авторезуватися</Button>}
+                {user.user?.uid ? <Button onClick={signOutGoogle} color="inherit"
+                                          sx={{textTransform: "none", fontSize: '16px'}}>Вийти</Button> :
+                    <Button onClick={signIn} color="inherit"
+                            sx={{textTransform: "none", fontSize: '16px'}}>Авторизуватися</Button>}
             </Toolbar>
         </AppBar>
     );
