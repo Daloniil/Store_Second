@@ -15,7 +15,7 @@ const Layout = ({children}: LayoutProps) => {
 
 
     const [open, setOpen] = useState(false);
-    const items = router.asPath === '/cart' ? {title: 'Корзина'}: router.asPath === '/checkout' ? {title: 'Оформлення Замовлення'} : paths.find((path) => path.pathName === router.asPath);
+    const items = router.asPath === '/cart' ? {title: 'Корзина'} : router.asPath === '/checkout' ? {title: 'Оформлення Замовлення'} : paths.find((path) => path.pathName === router.asPath);
 
     const theme = createTheme({
         components: {
@@ -53,9 +53,14 @@ const Layout = ({children}: LayoutProps) => {
                         <Paper sx={{p: 2, display: "flex", flexDirection: "column"}}>
                             {children}
                         </Paper>
+                        <Box sx={{height: '100px', backgroundColor: 'blue'}}>
+                            FOOTERT
+                        </Box>
                     </Container>
                 </Box>
+
             </Box>
+
         </ThemeProvider>
     );
 };

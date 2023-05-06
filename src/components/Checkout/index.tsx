@@ -44,6 +44,8 @@ export const CheckoutComponent = ({authContext, items}: CheckoutComponent) => {
         }
     });
 
+    console.log(authContext)
+
     const {getCities, getWarehouses} = useNovaPoshta()
     const {addNotification} = useNotification();
     const {addItemToOrders} = useOrders()
