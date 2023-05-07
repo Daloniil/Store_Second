@@ -11,6 +11,8 @@ import {Box, Button, Grid, IconButton, InputLabel, MenuItem, Select, SelectChang
 import {useItems} from "@/hooks/useItems";
 import {useNotification} from "@/hooks/useNotification";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
 
 const AddPage = () => {
     const {authContext} = useAuth();
@@ -105,12 +107,11 @@ const AddPage = () => {
                     data.photo = imageToUpload
                     data.type = itemType[Number(type)].pathName
                     if (data.photo && data.type) {
-                        console.log(data)
                         addItem(data)
-                        addNotification("Item add SUCCESS", NotificationKeys.SUCCESS);
+                        addNotification("Товар Успішно Додано", NotificationKeys.SUCCESS);
                         reset()
                     } else {
-                        addNotification("Select type and photo", NotificationKeys.ERROR);
+                        addNotification("Вкажіть Тип Товару Та Додайте Фото", NotificationKeys.ERROR);
                     }
                 })}
                 style={{margin: "0 auto"}}
@@ -194,9 +195,13 @@ const AddPage = () => {
                                     <PhotoCameraIcon fontSize="large" />
                                 </IconButton>
                             </label>
+                            {imageToUpload && (
+                                <Box ml={1} >
+                                    <CheckCircleIcon fontSize="large" color="success" />
+                                </Box>
+                            )}
                         </Box>
                     </Grid>
-
 
                     <Grid item xs={12}>
                         <Button variant="outlined" size="medium" type="submit" fullWidth>
@@ -206,79 +211,6 @@ const AddPage = () => {
                 </Grid>
             </form>
         </div>
-        // <div>
-        //     Додати
-        //     <form
-        //         onSubmit={handleSubmit((data) => {
-        //             data.photo = imageToUpload
-        //             data.type = itemType[Number(type)].pathName
-        //             if (data.photo && data.type) {
-        //                 console.log(data)
-        //                 addItem(data)
-        //                 addNotification("Item add SUCCESS", NotificationKeys.SUCCESS);
-        //                 reset()
-        //             } else {
-        //                 addNotification("Select type and photo", NotificationKeys.ERROR);
-        //             }
-        //         })}
-        //         style={{margin: "0 auto"}}
-        //     >
-        //         <InputLabel id="demo-simple-select-label">Оберіть тип товару</InputLabel>
-        //         <Select
-        //             labelId="demo-simple-select-label"
-        //             id="demo-simple-select"
-        //             value={type}
-        //             label="Type"
-        //             onChange={handleChange}
-        //         >
-        //             {itemType.map((itemT, index) => {
-        //                 return (
-        //                     <MenuItem value={index} key={index}>{itemT.title}</MenuItem>
-        //                 )
-        //             })}
-        //         </Select>
-        //
-        //         <TextField
-        //             error={!!errors.name}
-        //             label="Name"
-        //             {...register("name", {required: true})}
-        //             InputLabelProps={{
-        //                 shrink: true,
-        //             }}
-        //             helperText={errors.name?.message}
-        //         />
-        //
-        //         <TextField
-        //             error={!!errors.cost}
-        //             label="cost"
-        //             {...register("cost", {required: true})}
-        //             InputLabelProps={{
-        //                 shrink: true,
-        //             }}
-        //             helperText={errors.cost?.message}
-        //         />
-        //
-        //         <TextField
-        //             error={!!errors.description}
-        //             label="description"
-        //             {...register("description", {required: true})}
-        //             InputLabelProps={{
-        //                 shrink: true,
-        //             }}
-        //             helperText={errors.description?.message}
-        //         />
-        //
-        //
-        //         <input name="myFile" type="file" onChange={imageUploaded}/>
-        //
-        //         <Button variant="outlined" size="medium" type="submit">
-        //             Add Item
-        //         </Button>
-        //
-        //     </form>
-        //
-        //
-        // </div>
     )
 }
 

@@ -114,13 +114,13 @@ export const CheckoutComponent = ({authContext, items}: CheckoutComponent) => {
                     data.warehous = warehous.Description;
                     data.item = items;
                     if (data.arey && data.warehous) {
-                        addNotification("Item add SUCCESS", NotificationKeys.SUCCESS);
+                        addNotification("Замовлення Успішно Створено", NotificationKeys.SUCCESS);
                         addItemToOrders(data);
                         removeCart();
                         Router.push("/waitorder");
                     } else {
                         addNotification(
-                            "Select Array and Warehous ",
+                            "Оберіть Місто Та Відділення ",
                             NotificationKeys.ERROR
                         );
                     }

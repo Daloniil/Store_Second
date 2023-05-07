@@ -80,7 +80,7 @@ export const useItems = () => {
                 const indexGoods = items.map((id: Item) => id.id).indexOf(id);
                 items.splice(indexGoods, 1);
                 setDoc(docRef, arr);
-                addNotification("Delete Success", NotificationKeys.SUCCESS);
+                addNotification("Товар Видалено Успішно", NotificationKeys.SUCCESS);
             }
         }
     };
