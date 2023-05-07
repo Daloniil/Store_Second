@@ -60,17 +60,18 @@ const TypePage = () => {
                 <CardsWrapper>
                     {itemHook?.map((item) => (
                         <CardWrapper key={item.id} onClick={() => openItem(item)}>
-                            <Image src={item.photo} alt={item.name} width={350} height={400}/>
+                            <Image src={item.photo} alt={item.name} width={350} height={400}
+                                   style={{borderRadius: '4px'}}/>
                             <CardContent>
                                 <ItemName sx={{maxWidth: '250px'}}>{capitalizeFirstLetter(item.name)}</ItemName>
                                 <Price>{item.cost} UAH</Price>
                                 <ButtonsContainer>
-                                    <Button onClick={(e) => clickAddCart(e, item)} variant="contained">Add to
-                                        cart</Button>
+                                    <Button onClick={(e) => clickAddCart(e, item)} variant="contained">Додади до
+                                        кошику</Button>
                                     {user.user && user.user.uid !== ADMIN_UID.UID ? (
                                         ""
                                     ) : (
-                                        <Button onClick={(e) => clickDelete(e, item.id)}>Delete</Button>
+                                        <Button onClick={(e) => clickDelete(e, item.id)}>Видалита</Button>
                                     )}
                                 </ButtonsContainer>
                             </CardContent>

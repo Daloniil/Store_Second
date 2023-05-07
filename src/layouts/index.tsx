@@ -53,9 +53,6 @@ const Layout = ({children}: LayoutProps) => {
                         <Paper sx={{p: 2, display: "flex", flexDirection: "column"}}>
                             {children}
                         </Paper>
-                        <Box sx={{height: '100px', backgroundColor: 'blue'}}>
-                            FOOTERT
-                        </Box>
                     </Container>
                 </Box>
 

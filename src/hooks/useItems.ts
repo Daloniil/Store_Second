@@ -12,7 +12,6 @@ export const useItems = () => {
 
     const [itemHook, setItemHook] = useState([] as Item[]);
 
-
     const getItem = async (typeGoods: string) => {
         if (authentication) {
             const db = getFirestore();

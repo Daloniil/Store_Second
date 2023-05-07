@@ -4,12 +4,12 @@ export const itemType = [
         pathName: "toy",
     },
     {
-        title: "Столи Ручної Роботи",
-        pathName: "table",
+        title: "Намиста Ручної Роботи",
+        pathName: "necklaces",
     },
     {
-        title: "Лікажа Ручної Роботи",
-        pathName: "bed",
+        title: "Сумки Ручної Роботи",
+        pathName: "bag",
     },
     {
         title: "Чоловічі Вишиванки ",
@@ -18,5 +18,9 @@ export const itemType = [
     {
         title: "Жіночі Вишиванки ",
         pathName: "embroidered_woman",
+    },
+    {
+        title: "Лампи Ручної Роботи",
+        pathName: "lamp",
     },
 ]

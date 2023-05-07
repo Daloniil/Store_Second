@@ -15,15 +15,15 @@ import {Item} from "@/Interfaces/ItemIterface";
 
 
 const schema = yup.object().shape({
-    name: yup.string().required("This Field Cannot Be Empty"),
+    name: yup.string().required("Поле не повинно бути пустим"),
     mail: yup
         .string()
-        .email("Invalid email")
-        .required("This Field Cannot Be Empty"),
+        .email("Не валідний емейл")
+        .required("Поле не повинно бути пустим"),
     number: yup
         .string()
-        .matches(/^0[0-9]{9}$/, "Invalid phone number")
-        .required("This Field Cannot Be Empty"),
+        .matches(/^0[0-9]{9}$/, "Не валідний номер телефона")
+        .required("Поле не повинно бути пустим"),
 });
 
 

@@ -12,12 +12,12 @@ export const paths = [
         pathName: "/catalog/toy",
     },
     {
-        title: "Столи Ручної Роботи",
-        pathName: "/catalog/table",
+        title: "Намиста Ручної Роботи",
+        pathName: "/catalog/necklaces",
     },
     {
-        title: "Ліжка Ручної Роботи",
-        pathName: "/catalog/bed",
+        title: "Сумки Ручної Роботи",
+        pathName: "/catalog/bag",
     },
     {
         title: "Чоловічі Вишиванки",
@@ -26,6 +26,10 @@ export const paths = [
     {
         title: "Жіночі Вишиванки",
         pathName: "/catalog/embroidered_woman",
+    },
+    {
+        title: "Лампи Ручної Роботи",
+        pathName: "/catalog/lamp",
     },
     {
         title: "Замовлення",
