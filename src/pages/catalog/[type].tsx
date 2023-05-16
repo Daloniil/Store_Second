@@ -71,7 +71,7 @@ const TypePage = () => {
                                     {user.user && user.user.uid !== ADMIN_UID.UID ? (
                                         ""
                                     ) : (
-                                        <Button onClick={(e) => clickDelete(e, item.id)}>Видалита</Button>
+                                        <Button onClick={(e) => clickDelete(e, item.id)}>Видалити</Button>
                                     )}
                                 </ButtonsContainer>
                             </CardContent>

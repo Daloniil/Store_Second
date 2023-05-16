@@ -3,6 +3,7 @@ import {useCart} from "@/hooks/useCart";
 import {useEffect} from "react";
 import {useState} from "react";
 import {Item} from "@/Interfaces/ItemIterface";
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import {
     Button,
     Box,
@@ -60,6 +61,10 @@ const CartPage = () => {
 
     const totalPrice = items.reduce((total, item) => total + item.cost * item.amount, 0);
 
+    const isCartEmpty = () => {
+        return items.length === 0;
+    };
+
     const renderCartItem = (item: Item) => {
         const {id, name, cost, amount, photo} = item;
         return (
@@ -86,7 +91,11 @@ const CartPage = () => {
                         />
                     </Box>
                     <Box sx={{marginLeft: {xs: 0, sm: '16px'}, width: {xs: '100%', sm: '60%'}}}>
-                        <Typography variant={isMobile ? 'body1' : 'h6'} sx={{ marginBottom: '8px', fontWeight: 'bold', fontSize: isMobile ? '14px' : '20px' }}>
+                        <Typography variant={isMobile ? 'body1' : 'h6'} sx={{
+                            marginBottom: '8px',
+                            fontWeight: 'bold',
+                            fontSize: isMobile ? '14px' : '20px'
+                        }}>
                             {capitalizeFirstLetter(name)}
                         </Typography>
                         <Box sx={{display: 'flex', alignItems: 'center', marginBottom: '8px'}}>
@@ -125,41 +134,57 @@ const CartPage = () => {
     const renderCart = () => {
         return (
             <>
-                {items.map(renderCartItem)}
-                <Box
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        flexDirection: {xs: 'column', sm: 'row'},
-                        justifyContent: 'space-between',
-                        width: {xs: '90%', sm: '60%'},
-                    }}
-                >
-                    <Typography
-                        variant={isMobile ? 'subtitle1' : 'h6'}
-                        sx={{
-                            fontWeight: 'bold',
-                            color: 'primary.main',
-                            marginBottom: {xs: '8px', sm: 0},
-                            marginRight: {xs: 0, sm: '16px'},
-                        }}
+                {isCartEmpty() ? (
+                    <Box
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                        justifyContent="center"
+                        minHeight="200px"
+                        sx={{marginTop: '20px'}}
                     >
-                        Повна Вартість: {totalPrice} UAH
-                    </Typography>
-                    <Button
-                        onClick={() => redirectTo('/checkout')}
-                        sx={{
-                            marginTop: {xs: '8px', sm: 0},
-                            backgroundColor: 'primary.main',
-                            color: 'white',
-                            '&:hover': {
-                                backgroundColor: 'primary.dark',
-                            },
-                        }}
-                    >
-                        Оформити Замовлення
-                    </Button>
-                </Box>
+                        <SentimentDissatisfiedIcon fontSize="large" color="error"/>
+                        <Typography variant="h5" color="error" fontWeight="bold">
+                            Ваша Корзина Порожня
+                        </Typography>
+                    </Box>) : (
+                    <>
+                        {items.map(renderCartItem)}
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexDirection: {xs: 'column', sm: 'row'},
+                                justifyContent: 'space-between',
+                                width: {xs: '90%', sm: '60%'},
+                            }}
+                        >
+                            <Typography
+                                variant={isMobile ? 'subtitle1' : 'h6'}
+                                sx={{
+                                    fontWeight: 'bold',
+                                    color: 'primary.main',
+                                    marginBottom: {xs: '8px', sm: 0},
+                                    marginRight: {xs: 0, sm: '16px'},
+                                }}
+                            >
+                                Повна Вартість: {totalPrice} UAH
+                            </Typography>
+                            <Button
+                                onClick={() => redirectTo('/checkout')}
+                                sx={{
+                                    marginTop: {xs: '8px', sm: 0},
+                                    backgroundColor: 'primary.main',
+                                    color: 'white',
+                                    '&:hover': {
+                                        backgroundColor: 'primary.dark',
+                                    },
+                                }}
+                            >
+                                Оформити Замовлення
+                            </Button>
+                        </Box>
+                    </>)}
             </>
         );
     };
